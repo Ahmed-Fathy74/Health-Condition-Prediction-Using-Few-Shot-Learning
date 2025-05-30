@@ -1,95 +1,80 @@
-Health Condition Predictor: Few-Shot Learning for Symptom Classification
-Project Overview
-This project is part of the Natural Language Processing (AIE241) extracurricular activity at Alamein International University. It explores Few-Shot Learning using the SetFit model to predict health conditions from user-provided symptom descriptions, applied to the healthcare domain. The system uses a dataset of Reddit posts to classify symptoms into health conditions, comparing a Few-Shot Learning model (SetFit with distilbert-base-uncased) against a baseline TF-IDF + Logistic Regression model. A Streamlit interface allows users to input symptoms and receive predictions with confidence scores and basic explainability (top TF-IDF features for the baseline model).
-Hypothesis
-Does Few-Shot Learning (using SetFit) outperform a TF-IDF + Logistic Regression baseline for health condition prediction from Reddit symptom descriptions in terms of accuracy and F1-score?
-Dataset
+# Health Condition Predictor using Few-Shot Learning and TF-IDF Baseline
 
-Source: The dataset (reddit_posts_raw_data.csv) is a custom collection of Reddit posts related to health symptoms and their associated conditions. It is assumed to be sourced from public Reddit data (e.g., via APIs or Kaggle, not included in this repository due to size constraints).
-Structure: The dataset contains two main columns:
-text: User-described symptoms (free-form text).
-labels: Health condition labels (e.g., "flu", "migraine").
+## 📚 Overview
 
+This project explores the application of **Few-Shot Learning** using **SetFit** models in the **healthcare domain**, specifically for the task of **text classification** based on symptom descriptions. The system predicts possible health conditions from user-reported symptoms extracted from Reddit posts.
 
-Preprocessing: 
-Text cleaning: Remove URLs, special characters, and convert to lowercase.
-Filtering: Exclude texts shorter than 10 characters.
-Sampling: Balanced to 30 samples per class to reduce computational load.
+We compare a recent NLP technique (SetFit) with a traditional TF-IDF + Logistic Regression baseline to evaluate the effectiveness of few-shot learning on small, domain-specific datasets.
 
+---
 
-Note: To replicate this project, obtain a similar dataset from sources like Kaggle or Reddit APIs, ensuring it has text and labels columns.
+## 🎯 Objectives
 
-Requirements
+- Apply **Few-Shot Learning** to the healthcare domain using real-world social media data.
+- Build a web-based application using **Streamlit** that predicts health conditions from free-text symptoms.
+- Compare model performance between:
+  - A traditional **TF-IDF + Logistic Regression** baseline.
+  - A **SetFit-based few-shot learning** approach.
+- Offer basic model explainability for user input predictions.
 
-Python: 3.8 or higher
-Dependencies:pip install streamlit pandas numpy scikit-learn setfit datasets seaborn matplotlib
+---
 
+## 🧠 NLP Techniques
 
-Dataset: Place reddit_posts_raw_data.csv in the project root directory.
+- **Few-Shot Learning** with [SetFit](https://github.com/huggingface/setfit): Efficient fine-tuning of sentence transformers without large-scale data.
+- **Explainable AI**: Basic interpretability using TF-IDF top features.
+- **Baseline Model**: TF-IDF feature extraction with a Logistic Regression classifier.
 
-Installation
+---
 
-Clone this repository:git clone <repository-url>
-cd <repository-directory>
+## 🩺 Domain: Healthcare
 
+### Task: Symptom-Based Text Classification
 
-Install dependencies:pip install -r requirements.txt
+Users input symptom descriptions. The model classifies these into predefined health condition categories based on Reddit health-related posts.
 
-Alternatively, install individually:pip install streamlit pandas numpy scikit-learn setfit datasets seaborn matplotlib
+---
 
+## 🛠️ Technologies Used
 
-Ensure reddit_posts_raw_data.csv is in the project root directory.
+- **Python**, **Streamlit**
+- **scikit-learn** for baseline model
+- **Hugging Face SetFit** for few-shot learning
+- **Seaborn & Matplotlib** for data visualization
+- **Google Colab + Drive** for training environment
 
-Usage
+---
 
-Run the Streamlit app:streamlit run health_condition_predictor.py
+## 📁 Dataset
 
+- **Source**: Pre-annotated Reddit health-related posts.
+- **Format**: CSV with `text` and `labels` columns.
+- **Preprocessing**:
+  - Clean text (remove URLs, special characters, lowercase).
+  - Filter short entries.
+  - Balance data using `samples_per_class` sampling.
 
-Open the provided URL (e.g., http://localhost:8501) in a web browser.
-Features:
-View model performance metrics (accuracy, F1-score, precision, recall) for both models.
-Visualize confusion matrices for baseline and SetFit models.
-Enter symptom descriptions in the text area to predict health conditions, with confidence scores and top contributing words (for the baseline model).
+---
 
+## 📊 Evaluation
 
+Both models are evaluated on:
+- **Accuracy**
+- **Precision**
+- **Recall**
+- **F1 Score**
+- **Confusion Matrix**
 
-Code Structure
+> SetFit achieves strong performance even with minimal data, demonstrating its usefulness in low-resource domains like medical text classification.
 
-health_condition_predictor.py: Main script containing:
-Data loading and preprocessing (load_data, clean_text).
-Baseline model training (TF-IDF + Logistic Regression).
-Few-Shot Learning model training (SetFit with distilbert-base-uncased).
-Streamlit interface for predictions and visualizations.
+---
 
+## 🚀 How to Run
 
-reddit_posts_raw_data.csv: Dataset (not included; must be sourced separately).
+### Setup (on Google Colab)
 
-
-Team members collaborated equally on experimentation, metric calculations, and repository setup, tracked via GitHub commits.
-Results
-
-Metrics: Both models are evaluated on accuracy, F1-score, precision, and recall (weighted averages).
-Visualizations: Confusion matrices are displayed in the Streamlit app.
-Explainability: Top TF-IDF features are shown for baseline model predictions.
-Sample Output:
-Input: "I have a fever and cough."
-Baseline Prediction: "Flu" (Confidence: 85.2%)
-SetFit Prediction: "Flu" (Confidence: 90.1%)
-
-
-
-Limitations
-
-Small dataset size (30 samples per class) may limit model generalization.
-Limited explainability for the SetFit model; only the baseline model provides feature weights.
-No explicit error analysis (e.g., misclassified examples) is included in the app.
-
-Future Work
-
-Expand the dataset with more samples and diverse health conditions.
-Add explainability for the SetFit model using techniques like SHAP or attention visualization.
-Conduct error analysis to identify and address misclassifications.
-Explore additional Few-Shot Learning techniques or larger transformer models.
-
-Contact
-For questions, contact the team via the course Canvas page or GitHub issues.
+1. Upload `reddit_posts_raw_data.csv` to your **Google Drive**.
+2. Mount your drive in Google Colab:
+   ```python
+   from google.colab import drive
+   drive.mount('/content/drive')
